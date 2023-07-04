@@ -1,0 +1,13 @@
+
+<div class="center-div">
+    <h1>My Bookstore</h1>
+    <!-- letters -->
+    <span *ngFor="let letter of letters" >
+        <button type="button" #currentLetter (click)="setValue(currentLetter, $event)" value= {{letter}}>{{ letter }}</button>
+    </span>
+    <br>
+    <!-- numbers -->
+    <span *ngFor="let number of numbers" >
+        <button #currentNumber type="button" (click)="setValue(currentNumber, $event)" value= {{number}}>{{ number }}</button>
+    </span>
+</div>
