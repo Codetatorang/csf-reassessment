@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { ApicallService } from 'src/app/services/apicall.service';
 
@@ -21,7 +22,7 @@ export class View2Component implements OnInit{
   title !:string
   value !:string
   result:string[] = [];
-  constructor(private service:ApicallService){}
+  constructor(private service:ApicallService, private router:Router){}
 
   
   ngOnInit(): void {
@@ -40,4 +41,8 @@ export class View2Component implements OnInit{
   }
 
   // todo: a link clicked, navigate to view 3 and output the title, view 3 calls the service 
+  urlClick(bookTitle:string){
+    this.service.booktitle = bookTitle;
+    this.router.navigateByUrl("/view3");
+  }
 }

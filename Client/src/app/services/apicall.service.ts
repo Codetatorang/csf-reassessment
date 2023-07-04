@@ -14,7 +14,17 @@ export class ApicallService {
   //attributes to store
   private _view1Value!: string;
   private _view1type!: string;
+  private _booktitle!: string;
+
+
   
+  public get booktitle(): string {
+    return this._booktitle;
+  }
+  public set booktitle(value: string) {
+    this._booktitle = value;
+  }
+
   public get view1type(): string {
     return this._view1type;
   }

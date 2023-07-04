@@ -2,5 +2,7 @@
 <div>
     <h1>{{title}} {{ value }}</h1>
 
-    <div *ngfor=""></div>
+    <div *ngfor="let bookTitle of result">
+        <a (click)="urlClick(bookTitle)">{{bookTitle}} </a>
+    </div>
 </div>

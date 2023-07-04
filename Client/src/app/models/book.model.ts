@@ -12,3 +12,10 @@ export interface Book{
     genres:string;
     imageUrl:string;
 }
+
+export interface BookReview{
+    title:string;
+    authors:string;
+    description:string;
+    date:Date;
+}
