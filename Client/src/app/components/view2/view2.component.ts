@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, ViewChild } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { ApicallService } from 'src/app/services/apicall.service';
 
 @Component({
@@ -7,16 +8,35 @@ import { ApicallService } from 'src/app/services/apicall.service';
   styleUrls: ['./view2.component.scss']
 })
 export class View2Component implements OnInit{
+
+  // @ViewChild('letterVal') child:HTMLDivElement;
+
+// showStatus($event: Event) {
+// throw new Error('Method not implemented.');
+// }
   
-  @Input()
-  currentVal!:string;
+  // @Input()
+  // currentVal = new EventEmitter<string>;
 
   title !:string
+  value !:string
+  result:string[] = [];
   constructor(private service:ApicallService){}
 
   
   ngOnInit(): void {
-    console.log("currentVal: ", this.currentVal);
+    this.title = this.service.view1type;
+    this.value = this.service.view1Value;
+
+    firstValueFrom(this.service.fetchBooksByChar(this.value)).then(
+      (response) =>{
+        console.log("good response", response);
+      }
+    ).catch(
+      (error) => {
+        console.log("Error has occured: ", error);
+      }
+    )
   }
 
   // todo: a link clicked, navigate to view 3 and output the title, view 3 calls the service 

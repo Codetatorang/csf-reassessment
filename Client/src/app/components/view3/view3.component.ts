@@ -8,16 +8,18 @@ import { Book } from 'src/app/models/book.model'
   styleUrls: ['./view3.component.scss']
 })
 export class View3Component implements OnInit, OnDestroy{
-  @Input()
-  bookTitle!:string;
+
+//todo: test with generic book, change back to this.booktitle later
+  // @Input()
+  bookTitle:string = "Becoming";
 
   bookDetails!:Book;
 
   constructor(private service:ApicallService){}
 
   ngOnInit(): void {
-    //todo: test with generic book, change back to this.booktitle later
-      firstValueFrom(this.service.fetchBookDetails("The Outsider")).then(
+    console.log("entered init:");
+      firstValueFrom(this.service.fetchBookDetails(this.bookTitle)).then(
         (response) => {
           console.log("Good response", response);
           this.bookDetails.bookId = response.bookId;
@@ -44,4 +46,8 @@ export class View3Component implements OnInit, OnDestroy{
   ngOnDestroy(): void {
       
   }
+
+  directToReview() {
+    throw new Error('Method not implemented.');
+    }
 }

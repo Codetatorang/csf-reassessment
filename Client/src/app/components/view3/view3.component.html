@@ -1,3 +1,16 @@
-<div>
-    {{ bookDetails.bookId }}
+<div class="align-items-div">
+    <ul>
+        <img src={{ bookDetails.imageUrl}}>
+        <li> Pages: {{ bookDetails.pages }}</li>    
+        <li> Rating: {{ bookDetails.rating }}</li>    
+        <li> Genres: {{ bookDetails.genres}}</li>    
+    </ul>
+    &nbsp;
+    <ul>
+        <h1>{{ bookDetails.title }}</h1>
+        <span>By {{bookDetails.authors}}</span>
+        <p>{{ bookDetails.description}}</p>
+        <a (click)="directToReview()">Find Review</a>
+    </ul>
+
 </div>

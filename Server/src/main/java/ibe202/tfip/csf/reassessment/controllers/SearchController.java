@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-// import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import ibe202.tfip.csf.reassessment.models.BookDetails;
 import ibe202.tfip.csf.reassessment.services.SearchService;
 import jakarta.json.Json;
+import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 
@@ -25,6 +26,12 @@ import jakarta.json.JsonObject;
 public class SearchController {
     @Autowired
     private SearchService searchService;
+
+    private final String NYTIMES_API = "https://api.nytimes.com/svc/books/v3/reviews.json";
+
+    // "https://developer.nytimes.com/docs/books-product/1/routes/reviews.json/get";
+
+    private final String API_KEY = "FTswwKD8mWru0bmj1TmdZxwkcJVqdaGJ";
 
     @GetMapping("/searchchar/{letter}")
     public ResponseEntity<String> searchBookByChar(@PathVariable("letter") String letter) {
@@ -41,21 +48,17 @@ public class SearchController {
         // sucess
         JsonArrayBuilder jsonArray = Json.createArrayBuilder();
         for (BookDetails book : resultList.get()) {
-            // System.out.println("book content: " + book);
+            System.out.println("book content: " + book);
             jsonArray.add(
                     Json.createObjectBuilder()
                             .add("title", book.getTitle())
-                            .build());
+            );
         }
-        jsonArray.build();
+        JsonArray array = jsonArray.build();
+        System.out.println("jsonarray value: " + array);
 
-        JsonObject obj = Json.createObjectBuilder()
-                .add("titles", jsonArray)
-                .build();
-
-        System.out.println("jsonobject contents: " + obj);
-        System.out.println("jsonarray contents to string: " + jsonArray.toString());
-        return ResponseEntity.ok(jsonArray.toString());
+        System.out.println("jsonarray contents to string: " + array.toString());
+        return ResponseEntity.ok(array.toString());
     }
 
     @GetMapping("/{title}")
@@ -78,6 +81,20 @@ public class SearchController {
                 .add("reviewCount", book.getReviewCount())
                 .add("genres", book.getGenres())
                 .add("imageUrl", book.getImageUrl())
+                .build();
+        return ResponseEntity.ok(obj.toString());
+    }
+
+    @GetMapping("api/{title}")
+    public ResponseEntity<String> viaAPI(@PathVariable String title){
+        RestTemplate restTemplate = new RestTemplate();
+        String queryString = NYTIMES_API + "?title=" + title + "&api-key=" + API_KEY;
+        String result = restTemplate.getForObject(queryString, String.class);
+
+        System.out.println(result);
+        
+        JsonObject obj = Json.createObjectBuilder()
+                .add("result", result)
                 .build();
         return ResponseEntity.ok(obj.toString());
     }

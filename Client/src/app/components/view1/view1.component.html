@@ -3,11 +3,11 @@
     <h1>My Bookstore</h1>
     <!-- letters -->
     <span *ngFor="let letter of letters" >
-        <button type="button" #currentLetter (click)="setValue(currentLetter, $event)" value= {{letter}}>{{ letter }}</button>
+        <button type="button" #currentLetter (click)="setValue(currentLetter)" value= {{letter}}>{{ letter }}</button>
     </span>
     <br>
     <!-- numbers -->
     <span *ngFor="let number of numbers" >
-        <button #currentNumber type="button" (click)="setValue(currentNumber, $event)" value= {{number}}>{{ number }}</button>
+        <button #currentNumber type="button" (click)="setValue(currentNumber)" value= {{number}}>{{ number }}</button>
     </span>
 </div>
